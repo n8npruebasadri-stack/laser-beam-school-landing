@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Beam School — Máquinas láser industriales listas para producir desde el primer día</title>
+<style>
+  :root{
+    --paper:#FFFFFF; --paper-dim:#F5F8FC; --ink:#0E2A4A; --ink-soft:#3C5270;
+    --line:#DDE4EE; --slate:#5E7290; --beam:#2F6FED; --beam-deep:#1E54C2;
+    --ok:#1E7A52; --bad:#B23A3A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{color-scheme:light; scroll-behavior:smooth;}
+  body{
+    font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    background:var(--paper); color:var(--ink); line-height:1.5; overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  section{padding:104px 0;}
+  @media (max-width:700px){ section{padding:64px 0;} }
+  .rule{border-top:1px solid var(--line);}
+  h1,h2,h3{font-weight:800; letter-spacing:-0.02em;}
+  h2{font-size:clamp(28px,4.2vw,46px); max-width:16ch; line-height:1.08;}
+  h3{font-size:18px; letter-spacing:-0.01em;}
+  .lede{color:var(--ink-soft); font-size:18px; max-width:46ch; font-weight:400;}
+  :focus-visible{outline:2px solid var(--beam); outline-offset:3px;}
+
+  /* progreso de corte — barra fina arriba, se llena con el scroll */
+  .cutprogress{position:fixed; top:0; left:0; height:2px; width:100%; background:var(--line); z-index:100;}
+  .cutprogress i{display:block; height:100%; width:0%; background:var(--beam); transition:width .08s linear;}
+
+  /* enlaces con trazo que se dibuja al hover — un solo lenguaje de interacción reutilizado */
+  .trace{position:relative; display:inline-block;}
+  .trace::after{
+    content:""; position:absolute; left:0; bottom:-3px; height:2px; width:0%;
+    background:var(--beam); transition:width .25s ease;
+  }
+  .trace:hover::after{width:100%;}
+
+  header{position:sticky; top:0; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); z-index:50; border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding:20px 28px;}
+  .wordmark{font-weight:800; font-size:17px; letter-spacing:-.01em;}
+  .wordmark .dot{color:var(--beam);}
+  .navlinks{display:flex; gap:30px; font-size:14px; color:var(--ink-soft);}
+  .navlinks a:hover{color:var(--ink);}
+  @media (max-width:760px){ .navlinks{display:none;} }
+  .btn{
+    display:inline-block; padding:13px 22px; font-size:14px; font-weight:700;
+    border:1.5px solid var(--ink); cursor:pointer; white-space:nowrap; will-change:transform;
+    transition:transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn-fill{background:var(--beam); color:#fff; border-color:var(--beam);}
+  .btn-fill:hover{background:var(--beam-deep); border-color:var(--beam-deep);}
+  .btn-line{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn-line:hover{border-color:var(--beam); color:var(--beam);}
+  .navcta{display:flex; gap:10px;}
+  @media (max-width:520px){ .navcta .btn{padding:10px 14px; font-size:13px;} }
+
+  /* HERO */
+  .hero{padding:96px 0 72px;}
+  .hero h1{
+    font-size:clamp(40px,8.6vw,100px); line-height:.98; letter-spacing:-0.025em; max-width:15ch;
+  }
+  .hero h1 .cut{position:relative; display:inline-block;}
+  .hero h1 .cut::after{
+    content:""; position:absolute; left:0; right:0; bottom:.05em; height:5px;
+    background:var(--beam); transform:scaleX(0); transform-origin:left;
+    animation:draw 1s cubic-bezier(.4,0,.2,1) .5s forwards;
+  }
+  @keyframes draw{ to{ transform:scaleX(1); } }
+  @media (prefers-reduced-motion:reduce){ .hero h1 .cut::after{animation:none; transform:scaleX(1);} }
+  .hero-row{display:grid; grid-template-columns:1fr .46fr; gap:40px; margin-top:40px; align-items:end;}
+  @media (max-width:820px){ .hero-row{grid-template-columns:1fr; gap:24px;} }
+  .hero-side{border-left:1.5px solid var(--line); padding-left:28px;}
+  @media (max-width:820px){ .hero-side{border-left:none; border-top:1.5px solid var(--line); padding:22px 0 0;} }
+  .hero-side p{font-size:15px; color:var(--ink-soft); margin-bottom:20px;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px;}
+  .hero-magnet{font-size:13px; color:var(--slate);}
+  .badgerow{display:flex; gap:48px; margin-top:64px; flex-wrap:wrap;}
+  .badgerow div{font-size:14.5px; color:var(--ink-soft); max-width:22ch;}
+  .badgerow b{display:block; color:var(--ink); font-size:15.5px; margin-bottom:3px;}
+
+  /* DIAGNOSTICO */
+  .section-dim{background:var(--paper-dim);}
+  .problem-list{margin-top:44px; display:grid; gap:0;}
+  .problem-row{display:grid; grid-template-columns:30px 1fr; gap:18px; padding:26px 0; border-top:1px solid var(--line);}
+  .problem-row:last-child{border-bottom:1px solid var(--line);}
+  .cutmark{width:16px; height:16px; margin-top:4px; flex-shrink:0;}
+  .problem-row h3{margin-bottom:5px;}
+  .problem-row p{color:var(--ink-soft); font-size:15px;}
+
+  /* SOLUCION — pilares paralelos, no secuencia: sin numeración */
+  .pillars{margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:40px;}
+  @media (max-width:820px){ .pillars{grid-template-columns:1fr; gap:36px;} }
+  .pillar .swatch{width:34px; height:34px; margin-bottom:18px;}
+  .pillar h3{margin-bottom:6px;}
+  .pillar p{color:var(--ink-soft); font-size:14.5px;}
+
+  /* INCLUYE */
+  .modgrid{margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:0;}
+  @media (max-width:820px){ .modgrid{grid-template-columns:1fr;} }
+  .modcell{padding:4px 32px 4px 0; border-left:1px solid var(--line);}
+  .modcell:first-child{border-left:none; padding-left:0;}
+  @media (max-width:820px){ .modcell{border-left:none; border-top:1px solid var(--line); padding:28px 0;} .modcell:first-child{border-top:none;} }
+  .swatch{width:34px; height:34px; margin-bottom:18px;}
+  .swatch.fibra{background:linear-gradient(135deg,var(--ink),var(--slate));}
+  .swatch.formacion{background:linear-gradient(135deg,var(--beam),var(--beam-deep));}
+  .swatch.disenos{background:linear-gradient(135deg,var(--slate),#9FB3CC);}
+  .modcell ul{list-style:none; margin-top:14px; font-size:14px; color:var(--ink-soft);}
+  .modcell li{padding:6px 0; border-top:1px solid var(--line);}
+  .modcell li:first-child{border-top:none;}
+
+  /* RESULTADO — secuencia real: se queda numerada */
+  .steps{margin-top:44px; display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
+  @media (max-width:820px){ .steps{grid-template-columns:1fr 1fr; gap:32px;} }
+  @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
+  .step .num{font-size:30px; font-weight:800; color:var(--beam); letter-spacing:-0.02em;}
+  .step h3{margin-top:10px; font-size:15.5px; max-width:16ch;}
+
+  /* COMPARATIVA */
+  .comp{display:grid; grid-template-columns:1fr 1fr; margin-top:44px; border:1.5px solid var(--ink);}
+  @media (max-width:700px){ .comp{grid-template-columns:1fr;} }
+  .comp > div{padding:32px;}
+  .comp .otros{border-right:1.5px solid var(--ink); color:var(--ink-soft);}
+  @media (max-width:700px){ .comp .otros{border-right:none; border-bottom:1.5px solid var(--ink);} }
+  .comp .nosotros{background:var(--ink); color:#fff;}
+  .comp h3{margin-bottom:16px; font-size:15px;}
+  .comp ul{list-style:none; font-size:14.5px;}
+  .comp li{padding:8px 0; display:flex; gap:12px;}
+  .comp .otros li::before{content:"–"; color:var(--bad); font-weight:800;}
+  .comp .nosotros li::before{content:"+"; color:var(--beam); font-weight:800;}
+
+  /* TRUST STRIP */
+  .trust{display:flex; gap:56px; margin-top:8px; flex-wrap:wrap;}
+  .trust-n{font-size:34px; font-weight:800; color:var(--ink); letter-spacing:-0.02em;}
+  .trust-l{font-size:13.5px; color:var(--ink-soft); margin-top:4px; max-width:20ch;}
+
+  /* FAQ */
+  .faq{margin-top:44px; display:grid; grid-template-columns:1fr 1fr; gap:8px 48px;}
+  @media (max-width:760px){ .faq{grid-template-columns:1fr;} }
+  .faq-item{padding:22px 0; border-top:1px solid var(--line);}
+  .faq-item h3{margin-bottom:7px; font-size:15px;}
+  .faq-item p{color:var(--ink-soft); font-size:14px;}
+  .pending{color:var(--slate); font-style:italic;}
+
+  /* LAUNCHPAD / FORM */
+  .launchpad{background:var(--ink); color:#fff;}
+  .launchpad h2{color:#fff;}
+  .launchpad .lede{color:#AFC2DA;}
+  .form-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; margin-top:48px; align-items:start;}
+  @media (max-width:820px){ .form-grid{grid-template-columns:1fr; gap:32px;} }
+  label{display:block; font-size:13px; color:#9FB3CC; margin-bottom:6px; margin-top:18px;}
+  label:first-child{margin-top:0;}
+  select, input[type=email], input[type=text], input[type=tel]{
+    width:100%; padding:12px 14px; border:1px solid #2A4567; background:#16365A;
+    color:#fff; font-size:14.5px; font-family:inherit;
+  }
+  select:focus, input:focus{outline:none; border-color:var(--beam);}
+  .form-submit{margin-top:24px;}
+  .form-submit button{width:100%;}
+  .form-msg{margin-top:14px; font-size:14px;}
+  .form-msg.ok{color:#8FD4A6;}
+  .form-msg.err{color:#F3A38C;}
+  .side-note p{font-size:15px; color:#AFC2DA; margin-top:16px; max-width:42ch;}
+  footer{padding:36px 0; text-align:left; color:var(--slate); font-size:12.5px; border-top:1px solid var(--line);}
+  footer .wordmark{color:var(--ink); margin-bottom:10px;}
+</style>
+</head>
+<body>
+
+<div class="cutprogress"><i id="cutbar"></i></div>
+
+<header>
+  <nav>
+    <div class="wordmark">LASER BEAM SCHOOL<span class="dot">.</span></div>
+    <div class="navlinks">
+      <a class="trace" href="#problema">Problema</a>
+      <a class="trace" href="#solucion">Solución</a>
+      <a class="trace" href="#incluye">Qué incluye</a>
+      <a class="trace" href="#resultado">Resultado</a>
+    </div>
+    <div class="navcta">
+      <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn btn-fill" href="#contacto">Solicitar info</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Máquinas láser <span class="cut">listas para producir</span> desde el primer día</h1>
+    <div class="hero-row">
+      <div class="badgerow">
+        <div><b>Sin experiencia</b>necesaria para operar desde el día 1</div>
+        <div><b>Empieza rápido</b>máquina configurada, no en pruebas</div>
+        <div><b>Sistema completo</b>no es solo hardware</div>
+      </div>
+      <div class="hero-side">
+        <p>Incluye formación completa + acceso a más de 500 diseños listos para usar.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-fill" href="#contacto">Solicitar información</a>
+          <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+        </div>
+        <div class="hero-magnet">★ biblioteca de diseños gratuita al solicitar información</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problema" class="section-dim rule">
+  <div class="wrap">
+    <h2>¿Por qué la mayoría falla al comprar una máquina láser?</h2>
+    <div class="problem-list">
+      <div class="problem-row">
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <div>
+          <h3>No saben usarla correctamente</h3>
+          <p>Compran una máquina sin saber cómo sacarle partido real.</p>
+        </div>
+      </div>
+      <div class="problem-row">
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <div>
+          <h3>No tienen diseños listos</h3>
+          <p>Pierden semanas buscando o creando archivos desde cero.</p>
+        </div>
+      </div>
+      <div class="problem-row">
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <div>
+          <h3>No saben qué fabricar</h3>
+          <p>Sin estrategia de producto, la máquina acumula polvo.</p>
+        </div>
+      </div>
+      <div class="problem-row">
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <div>
+          <h3>Pierden tiempo y dinero</h3>
+          <p>Meses de prueba y error antes de generar el primer ingreso.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="solucion">
+  <div class="wrap">
+    <h2>No vendemos solo máquinas</h2>
+    <p class="lede">Te damos todo lo necesario para producir desde el día 1:</p>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="swatch fibra"></div>
+        <h3>Máquina adaptada a tu negocio</h3>
+        <p>Fibra para metal, CO₂ para madera, acrílico, cuero y textil.</p>
+      </div>
+      <div class="pillar">
+        <div class="swatch formacion"></div>
+        <h3>Formación paso a paso</h3>
+        <p>Desde cero, enfocada en resultados de producción real.</p>
+      </div>
+      <div class="pillar">
+        <div class="swatch disenos"></div>
+        <h3>Biblioteca de diseños lista para usar</h3>
+        <p>Clasificados por sector, listos para cargar y producir.</p>
+      </div>
+    </div>
+    <a class="btn btn-fill" href="#contacto" style="margin-top:36px; display:inline-block;">Quiero información</a>
+  </div>
+</section>
+
+<section id="incluye" class="section-dim rule">
+  <div class="wrap">
+    <h2>Qué incluye</h2>
+    <div class="modgrid">
+      <div class="modcell">
+        <div class="swatch fibra"></div>
+        <h3>Fibra / CO₂</h3>
+        <ul>
+          <li>Adaptada a tu negocio</li>
+          <li>Directa de fábrica</li>
+          <li>Lista para producción</li>
+        </ul>
+      </div>
+      <div class="modcell">
+        <div class="swatch formacion"></div>
+        <h3>Formación desde cero</h3>
+        <ul>
+          <li>Uso real de la máquina</li>
+          <li>Gestión de materiales</li>
+          <li>Enfocada a resultados</li>
+        </ul>
+      </div>
+      <div class="modcell">
+        <div class="swatch disenos"></div>
+        <h3>+500 diseños listos</h3>
+        <ul>
+          <li>Clasificados por sector</li>
+          <li>Sin edición previa</li>
+          <li>Listos para usar</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resultado">
+  <div class="wrap">
+    <h2>Lo que consigues con este sistema</h2>
+    <div class="steps">
+      <div class="step"><div class="num">01</div><h3>Produces desde el primer día</h3></div>
+      <div class="step"><div class="num">02</div><h3>Ahorras semanas de aprendizaje</h3></div>
+      <div class="step"><div class="num">03</div><h3>No necesitas diseñar desde cero</h3></div>
+      <div class="step"><div class="num">04</div><h3>Te centras en vender</h3></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-dim rule">
+  <div class="wrap">
+    <h2>La diferencia</h2>
+    <div class="comp">
+      <div class="otros">
+        <h3>Otros</h3>
+        <ul>
+          <li>Solo venden máquinas</li>
+          <li>Sin formación incluida</li>
+          <li>Sin biblioteca de diseños</li>
+          <li>Semanas para empezar</li>
+        </ul>
+      </div>
+      <div class="nosotros">
+        <h3>Laser Beam School</h3>
+        <ul>
+          <li>Máquina adaptada a ti</li>
+          <li>Formación completa incluida</li>
+          <li>Biblioteca de diseños incluida</li>
+          <li>Produces desde el día 1</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="trust">
+      <div><div class="trust-n">500+</div><div class="trust-l">diseños listos en la biblioteca</div></div>
+      <div><div class="trust-n">&lt;24h</div><div class="trust-l">compromiso de respuesta tras tu solicitud</div></div>
+      <div><div class="trust-n">100%</div><div class="trust-l">soporte y formación en español</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="section-dim rule">
+  <div class="wrap">
+    <h2>Antes de que preguntes</h2>
+    <div class="faq">
+      <div class="faq-item">
+        <h3>¿Hay financiación disponible?</h3>
+        <p class="pending">[PENDIENTE: confirmar condiciones de financiación/leasing reales antes de publicar esta respuesta]</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Cuánto tarda la entrega de la máquina?</h3>
+        <p class="pending">[PENDIENTE: plazo real de entrega del proveedor]</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Qué garantía tiene la máquina?</h3>
+        <p class="pending">[PENDIENTE: condiciones de garantía reales]</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Necesito experiencia previa?</h3>
+        <p>No. La formación empieza desde cero, pensada para que cualquier persona opere la máquina de forma autónoma.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Los diseños hay que editarlos?</h3>
+        <p>No. Cargas el archivo y empiezas a fabricar, sin edición previa.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Qué pasa si tengo una duda después de la compra?</h3>
+        <p>Tienes soporte continuo para resolver dudas y que no pares de producir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="launchpad">
+  <div class="wrap">
+    <h2>Empieza a producir hoy</h2>
+    <p class="lede">Déjanos tu email y te enviaremos toda la información sin compromiso.</p>
+
+    <div class="form-grid">
+      <form id="unilaser-form">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+        <label for="telefono">Teléfono (WhatsApp)</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+
+        <label for="interes">¿En qué te podemos ayudar?</label>
+        <select id="interes" name="interes" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Quiero informacion">Quiero información</option>
+          <option value="Comprar maquina">Comprar máquina</option>
+          <option value="Tengo maquina, quiero formacion">Tengo máquina, quiero formación</option>
+        </select>
+
+        <label for="presupuesto">¿Cuándo te gustaría arrancar?</label>
+        <select id="presupuesto" name="presupuesto" required>
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="Ya tengo presupuesto decidido">Ya tengo presupuesto decidido</option>
+          <option value="En el proximo mes">En el próximo mes</option>
+          <option value="Estoy explorando opciones">Estoy explorando opciones, sin prisa</option>
+        </select>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-fill">Solicitar información</button>
+        </div>
+        <div class="form-msg" id="form-msg"></div>
+      </form>
+
+      <div class="side-note">
+        <h3 style="color:#fff;">O escríbenos directo</h3>
+        <p>Si quieres avanzar más rápido que un formulario, escríbenos directamente por WhatsApp — respondemos nosotros, no un bot.</p>
+        <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener" style="margin-top:18px; display:inline-block; border-color:#2A4567; color:#fff;">Hablar por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="wordmark">LASER BEAM SCHOOL</div>
+    <div class="pending">[PENDIENTE: razón social Laser Beam School SL · CIF · dirección fiscal]</div>
+    <div class="pending">[PENDIENTE: email corporativo real]</div>
+    <div style="margin-top:8px;">WhatsApp: +34 633 56 56 38</div>
+  </div>
+</footer>
+
+<script>
+  // Barra de progreso de "corte" — se llena con el scroll de la página.
+  const cutbar = document.getElementById('cutbar');
+  function updateCutbar(){
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    cutbar.style.width = scrolled + '%';
+  }
+  document.addEventListener('scroll', updateCutbar, { passive:true });
+  updateCutbar();
+
+  // CTA magnético — solo en puntero fino (desktop), respeta preferencia de movimiento reducido.
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  if (!reduceMotion && finePointer) {
+    document.querySelectorAll('.btn-fill').forEach(function (btn) {
+      btn.addEventListener('mousemove', function (e) {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.18;
+        const y = (e.clientY - r.top - r.height / 2) * 0.28;
+        btn.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      });
+      btn.addEventListener('mouseleave', function () {
+        btn.style.transform = 'translate(0,0)';
+      });
+    });
+  }
+
+  // Webhook del workflow "Laser Beam School - 01 Captacion de Leads" (n8n).
+  // El workflow existe pero esta INACTIVO a proposito hasta que Adri lo apruebe.
+  const WEBHOOK_URL = "https://n8n-n8n.v2e9sr.easypanel.host/webhook/unilaser-captacion";
+
+  const form = document.getElementById('unilaser-form');
+  const msg = document.getElementById('form-msg');
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const data = {
+      nombre: document.getElementById('nombre').value,
+      telefono: document.getElementById('telefono').value,
+      email: document.getElementById('email').value,
+      interes: document.getElementById('interes').value,
+      presupuesto: document.getElementById('presupuesto').value,
+      origen: 'Landing Web',
+      fecha: new Date().toISOString()
+    };
+
+    if (!WEBHOOK_URL) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Formulario listo, falta conectar el webhook de n8n.';
+      console.log('Lead capturado (sin enviar, falta WEBHOOK_URL):', data);
+      return;
+    }
+
+    try {
+      msg.className = 'form-msg';
+      msg.textContent = 'Enviando...';
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!res.ok) throw new Error('Error de red');
+      msg.className = 'form-msg ok';
+      msg.textContent = '¡Gracias! Te contactaremos pronto.';
+      form.reset();
+    } catch (err) {
+      msg.className = 'form-msg err';
+      msg.textContent = 'Hubo un error. Escríbenos por WhatsApp mejor.';
+    }
+  });
+</script>
+
+</body>
+</html>
