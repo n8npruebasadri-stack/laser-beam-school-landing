@@ -69,6 +69,13 @@
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px;}
   .hero-magnet{font-size:13px; color:var(--faint); margin-top:16px;}
 
+  .hero-visual{
+    position:relative; z-index:1; max-width:380px; margin:56px auto 0; border-radius:20px; overflow:hidden;
+    border:1px solid var(--line-strong); box-shadow:0 30px 70px -20px rgba(0,0,0,.7), 0 0 60px -10px var(--glow);
+    transform-style:preserve-3d; background:radial-gradient(circle at 50% 40%, var(--card), var(--paper-dim) 75%); padding:28px;
+  }
+  .hero-visual img{display:block; width:100%; height:auto;}
+
   .floatrow{
     position:relative; z-index:1; display:flex; justify-content:center; align-items:center; gap:22px; margin-top:100px;
     flex-wrap:nowrap; max-width:1180px; margin-left:auto; margin-right:auto; padding:0 12px 20px;
@@ -148,11 +155,15 @@
   @media (max-width:760px){ .sys-panel-media{grid-template-columns:1fr;} }
   .sys-gallery{display:grid; grid-template-columns:1fr 1fr; gap:10px; perspective:900px;}
   .sys-gallery-single{grid-template-columns:1fr;}
+  .sys-gallery-trio{grid-template-columns:repeat(3,1fr);}
+  @media (max-width:520px){ .sys-gallery-trio{grid-template-columns:1fr 1fr;} }
   .sys-gallery img{
-    width:100%; height:130px; object-fit:cover; border-radius:12px; border:1px solid var(--line-strong);
+    width:100%; height:150px; object-fit:cover; border-radius:12px; border:1px solid var(--line-strong);
     box-shadow:0 18px 36px -16px rgba(0,0,0,.6); transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
   .sys-gallery-single img{height:190px;}
+  /* Fotos de producto con fondo transparente (recortadas): fondo degradado propio + object-fit:contain */
+  .sys-gallery-product img{object-fit:contain; padding:14px; background:radial-gradient(circle at 50% 45%, var(--card), var(--paper-dim) 80%);}
 
   /* Efecto 3D generico: ladea la tarjeta siguiendo el cursor */
   .tilt-3d{transform-style:preserve-3d; will-change:transform;}
@@ -266,6 +277,10 @@
     </div>
     <div class="hero-magnet">★ biblioteca de diseños gratuita al solicitar información</div>
 
+    <div class="hero-visual tilt-3d">
+      <img src="images/maquina-01.png" alt="Máquina láser de fibra lista para producir">
+    </div>
+
     <div class="floatrow">
       <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Vale para cortar acero inoxidable?</div></div>
       <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Necesito experiencia previa?</div></div>
@@ -330,9 +345,10 @@
                 <li>Configurada y lista para producción desde la entrega</li>
               </ul>
             </div>
-            <div class="sys-gallery">
-              <img class="tilt-3d" src="images/maquina-fibra-corte.jpg" alt="Máquina láser de fibra cortando una pieza metálica, chispas saltando del corte" loading="lazy">
-              <img class="tilt-3d" src="images/maquina-cnc-detalle.jpg" alt="Detalle del cabezal de una máquina láser CNC industrial" loading="lazy">
+            <div class="sys-gallery sys-gallery-trio sys-gallery-product">
+              <img class="tilt-3d" src="images/maquina-01.png" alt="Máquina láser de fibra de sobremesa, lista para producir" loading="lazy">
+              <img class="tilt-3d" src="images/maquina-02.png" alt="Máquina láser de fibra, vista frontal" loading="lazy">
+              <img class="tilt-3d" src="images/maquina-03.png" alt="Máquina láser de fibra con cabina cerrada y ordenador de control" loading="lazy">
             </div>
           </div>
         </div>
@@ -346,13 +362,18 @@
           <svg class="sys-chevron" viewBox="0 0 18 18" fill="none"><path d="M4.5 7L9 11.5L13.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sys-panel" id="panel-2" role="region" aria-labelledby="trigger-2">
-          <div class="sys-panel-inner">
-            <p>No hace falta experiencia previa. La formación está enfocada en producción real, no en pruebas sueltas.</p>
-            <ul>
-              <li>Uso real de la máquina, no solo teoría</li>
-              <li>Gestión de materiales por tipo de proyecto</li>
-              <li>Enfocada a resultados, no a "aprender por aprender"</li>
-            </ul>
+          <div class="sys-panel-inner sys-panel-media">
+            <div class="sys-text">
+              <p>No hace falta experiencia previa. La formación está enfocada en producción real, no en pruebas sueltas.</p>
+              <ul>
+                <li>Uso real de la máquina, no solo teoría</li>
+                <li>Gestión de materiales por tipo de proyecto</li>
+                <li>Enfocada a resultados, no a "aprender por aprender"</li>
+              </ul>
+            </div>
+            <div class="sys-gallery sys-gallery-single">
+              <img class="tilt-3d" src="images/formacion-01.jpg" alt="Formación paso a paso: encendido y primeros pasos con la máquina" loading="lazy">
+            </div>
           </div>
         </div>
       </div>
@@ -374,8 +395,10 @@
                 <li>Biblioteca actualizada de forma periódica</li>
               </ul>
             </div>
-            <div class="sys-gallery sys-gallery-single">
-              <img class="tilt-3d" src="images/maquina-grabado.jpg" alt="Diseño grabado con láser sobre madera" loading="lazy">
+            <div class="sys-gallery sys-gallery-trio">
+              <img class="tilt-3d" src="images/disenos-01.jpg" alt="Diseño de joyería grabado con láser: colgantes personalizados" loading="lazy">
+              <img class="tilt-3d" src="images/disenos-02.jpg" alt="Diseño de joyería grabado con láser: colgante infinito con huella de bebé" loading="lazy">
+              <img class="tilt-3d" src="images/disenos-03.jpg" alt="Diseño de joyería grabado con láser: colgante infinito con nombres" loading="lazy">
             </div>
           </div>
         </div>
