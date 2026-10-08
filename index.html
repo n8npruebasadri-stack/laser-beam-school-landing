@@ -7,12 +7,13 @@
 <meta name="description" content="Máquina láser + formación + biblioteca de 500 diseños. Sistema completo para producir desde el primer día.">
 <style>
   :root{
-    --paper:#FFFFFF; --paper-dim:#F5F8FC; --ink:#0E2A4A; --ink-soft:#3C5270;
-    --line:#DDE4EE; --slate:#5E7290; --beam:#2F6FED; --beam-deep:#1E54C2;
-    --ok:#1E7A52; --bad:#B23A3A;
+    --paper:#060D1C; --paper-dim:#0A1630; --card:#0C1A38; --ink:#F2F6FF; --ink-soft:#93A8CC;
+    --line:rgba(108,156,255,.16); --line-strong:rgba(108,156,255,.32); --faint:#5E7296;
+    --beam:#4C8CFF; --beam-deep:#2F6FED; --glow:rgba(76,140,255,.45);
+    --ok:#35D399; --bad:#FF5C6C;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{color-scheme:light; scroll-behavior:smooth;}
+  html{color-scheme:dark; scroll-behavior:smooth;}
   body{
     font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
     background:var(--paper); color:var(--ink); line-height:1.5; overflow-x:hidden;
@@ -35,52 +36,68 @@
   .trace::after{content:""; position:absolute; left:0; bottom:-3px; height:2px; width:0%; background:var(--beam); transition:width .25s ease;}
   .trace:hover::after{width:100%;}
 
-  header{position:sticky; top:0; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); z-index:50; border-bottom:1px solid var(--line);}
-  nav{display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding:20px 28px;}
+  header{position:sticky; top:0; background:rgba(6,13,28,.75); backdrop-filter:blur(10px); z-index:50; border-bottom:1px solid var(--line);}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding:18px 28px;}
   .wordmark{font-weight:800; font-size:17px; letter-spacing:-.01em;}
   .wordmark .dot{color:var(--beam);}
   .navlinks{display:flex; gap:28px; font-size:14px; color:var(--ink-soft);}
   .navlinks a:hover{color:var(--ink);}
   @media (max-width:820px){ .navlinks{display:none;} }
   .btn{
-    display:inline-block; padding:13px 22px; font-size:14px; font-weight:700;
-    border:1.5px solid var(--ink); cursor:pointer; white-space:nowrap; will-change:transform;
-    transition:transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+    display:inline-flex; align-items:center; gap:6px; padding:13px 24px; font-size:14px; font-weight:700;
+    border:1px solid var(--line-strong); border-radius:99px; cursor:pointer; white-space:nowrap; will-change:transform;
+    transition:transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+    background:rgba(255,255,255,.03); color:var(--ink);
   }
-  .btn-fill{background:var(--beam); color:#fff; border-color:var(--beam);}
-  .btn-fill:hover{background:var(--beam-deep); border-color:var(--beam-deep);}
-  .btn-line{background:transparent; color:var(--ink); border-color:var(--ink);}
+  .btn-fill{background:linear-gradient(135deg,var(--beam),var(--beam-deep)); color:#fff; border-color:transparent; box-shadow:0 6px 22px -6px var(--glow);}
+  .btn-fill:hover{box-shadow:0 8px 28px -6px var(--glow);}
   .btn-line:hover{border-color:var(--beam); color:var(--beam);}
   .navcta{display:flex; gap:10px;}
-  @media (max-width:520px){ .navcta .btn{padding:10px 14px; font-size:13px;} }
+  @media (max-width:520px){ .navcta .btn{padding:10px 16px; font-size:13px;} }
 
   /* HERO */
-  .hero{position:relative; padding:88px 0 72px; overflow:hidden;}
+  .hero{position:relative; padding:100px 0 140px; overflow:hidden;}
+  .hero-aurora{position:absolute; top:-30%; left:50%; width:1100px; height:900px; transform:translateX(-50%);
+    background:radial-gradient(circle, rgba(76,140,255,.3), rgba(76,140,255,.08) 45%, transparent 68%);
+    filter:blur(10px); z-index:0; pointer-events:none; animation:auroraPulse 7s ease-in-out infinite;}
+  @keyframes auroraPulse{0%,100%{opacity:.75; transform:translateX(-50%) scale(1);} 50%{opacity:1; transform:translateX(-50%) scale(1.07);}}
   .hero-bg{position:absolute; inset:0; z-index:0; pointer-events:none;}
-  .hero-bg svg{width:100%; height:100%; opacity:.55;}
-  .hero-cut{fill:none; stroke:var(--line); stroke-width:1.5;}
+  .hero-bg svg{width:100%; height:100%; opacity:.4;}
+  .hero-cut{fill:none; stroke:var(--line-strong); stroke-width:1.5;}
   .hero-node{fill:var(--paper); stroke:var(--beam); stroke-width:1.5;}
   .hero-light{fill:var(--beam);}
-  .hero-inner{position:relative; z-index:1;}
-  .hero h1{font-size:clamp(40px,8.2vw,96px); line-height:.98; letter-spacing:-0.025em; max-width:15ch;}
-  .hero h1 .cut{position:relative; display:inline-block;}
-  .hero h1 .cut::after{
-    content:""; position:absolute; left:0; right:0; bottom:.05em; height:5px;
-    background:var(--beam); transform:scaleX(0); transform-origin:left;
-    animation:draw 1s cubic-bezier(.4,0,.2,1) .5s forwards;
+  .hero-inner{position:relative; z-index:1; text-align:center;}
+  .hero-kicker{font-size:12.5px; letter-spacing:.14em; color:var(--beam); font-weight:700; margin-bottom:18px;}
+  .hero h1{font-size:clamp(40px,7.4vw,84px); line-height:1.03; letter-spacing:-0.025em; max-width:17ch; margin:0 auto;}
+  .hero h1 .cut{position:relative; display:inline-block; font-style:italic; color:var(--beam); font-family:Georgia,"Times New Roman",serif; font-weight:700;}
+  .hero-sub{color:var(--ink-soft); font-size:17px; max-width:50ch; margin:24px auto 0;}
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px;}
+  .hero-magnet{font-size:13px; color:var(--faint); margin-top:16px;}
+
+  .floatrow{position:relative; z-index:1; display:flex; justify-content:center; gap:16px; margin-top:92px; flex-wrap:nowrap; max-width:1040px; margin-left:auto; margin-right:auto; padding:0 12px;}
+  .floatcard{
+    background:var(--card); border:1px solid var(--line-strong); border-radius:12px; padding:14px 16px; width:170px; flex-shrink:0;
+    box-shadow:0 20px 40px -16px rgba(0,0,0,.55); transition:transform .25s ease;
   }
-  @keyframes draw{ to{ transform:scaleX(1); } }
-  @media (prefers-reduced-motion:reduce){ .hero h1 .cut::after{animation:none; transform:scaleX(1);} .hero-light, .hero-node{animation:none !important;} }
-  .hero-row{display:grid; grid-template-columns:1fr .46fr; gap:40px; margin-top:40px; align-items:end;}
-  @media (max-width:820px){ .hero-row{grid-template-columns:1fr; gap:24px;} }
-  .hero-side{border-left:1.5px solid var(--line); padding-left:28px;}
-  @media (max-width:820px){ .hero-side{border-left:none; border-top:1.5px solid var(--line); padding:22px 0 0;} }
-  .hero-side p{font-size:15px; color:var(--ink-soft); margin-bottom:20px;}
-  .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px;}
-  .hero-magnet{font-size:13px; color:var(--slate);}
-  .badgerow{display:flex; gap:48px; margin-top:64px; flex-wrap:wrap;}
-  .badgerow div{font-size:14.5px; color:var(--ink-soft); max-width:22ch;}
+  .floatcard:nth-child(odd){transform:translateY(-10px) rotate(-2.5deg);}
+  .floatcard:nth-child(even){transform:translateY(14px) rotate(2deg);}
+  .floatcard:nth-child(3n){transform:translateY(-4px) rotate(-1deg);}
+  .floatcard:hover{transform:translateY(-6px) rotate(0deg) scale(1.04); border-color:var(--beam);}
+  .floatcard .tag{font-size:10px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase; margin-bottom:6px;}
+  .floatcard .q{font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.3;}
+  @media (max-width:900px){ .floatrow{display:grid; grid-template-columns:repeat(3,1fr); max-width:420px; gap:12px;} .floatcard{width:auto; transform:none !important;} .floatcard:hover{transform:translateY(-4px) !important;} }
+  @media (max-width:520px){ .floatrow{grid-template-columns:repeat(2,1fr);} }
+
+  .badgerow{display:flex; gap:48px; margin-top:72px; flex-wrap:wrap; justify-content:center; position:relative; z-index:1;}
+  .badgerow div{font-size:14.5px; color:var(--ink-soft); max-width:22ch; text-align:left;}
   .badgerow b{display:block; color:var(--ink); font-size:15.5px; margin-bottom:3px;}
+
+  @media (prefers-reduced-motion:reduce){ .hero h1 .cut::after{animation:none; transform:scaleX(1);} .hero-light, .hero-node, .hero-aurora{animation:none !important;} }
+
+  /* Reveal al hacer scroll */
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1);}
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
 
   /* DIAGNOSTICO */
   .section-dim{background:var(--paper-dim);}
@@ -98,12 +115,12 @@
     width:100%; display:grid; grid-template-columns:40px 1fr auto 24px; align-items:center; gap:18px;
     padding:24px 4px; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; color:var(--ink);
   }
-  .sys-num{font-size:14px; color:var(--slate); font-weight:700;}
+  .sys-num{font-size:14px; color:var(--faint); font-weight:700;}
   .sys-title{font-size:18px; font-weight:800; letter-spacing:-0.01em;}
   .sys-result{font-size:13.5px; color:var(--beam); font-weight:600; white-space:nowrap;}
   @media (max-width:640px){ .sys-result{display:none;} }
-  .sys-chevron{width:16px; height:16px; transition:transform .2s ease; flex-shrink:0;}
-  .sys-trigger[aria-expanded="true"] .sys-chevron{transform:rotate(180deg);}
+  .sys-chevron{width:16px; height:16px; transition:transform .2s ease; flex-shrink:0; color:var(--ink-soft);}
+  .sys-trigger[aria-expanded="true"] .sys-chevron{transform:rotate(180deg); color:var(--beam);}
   .sys-panel{max-height:0; overflow:hidden; transition:max-height .3s ease;}
   .sys-panel-inner{padding:0 4px 28px 58px; color:var(--ink-soft); font-size:15px; max-width:56ch;}
   @media (max-width:640px){ .sys-panel-inner{padding-left:4px;} }
@@ -111,24 +128,21 @@
   .sys-panel-inner li{padding:3px 0;}
 
   /* DEMO REAL — whatsapp mockup */
-  .demo{background:var(--ink); color:#fff;}
-  .demo h2{color:#fff;}
-  .demo .lede{color:#AFC2DA;}
+  .demo .lede{color:var(--ink-soft);}
   .demo-grid{display:grid; grid-template-columns:1fr .85fr; gap:56px; margin-top:44px; align-items:center;}
   @media (max-width:820px){ .demo-grid{grid-template-columns:1fr; gap:32px;} }
-  .demo-points{list-style:none; font-size:15px; color:#C7D5E8;}
-  .demo-points li{padding:10px 0; border-top:1px solid #1D3A5C;}
+  .demo-points{list-style:none; font-size:15px; color:var(--ink-soft);}
+  .demo-points li{padding:10px 0; border-top:1px solid var(--line);}
   .demo-points li:first-child{border-top:none;}
-  .phone{background:#0A1F36; border:1px solid #1D3A5C; border-radius:4px; padding:18px; max-width:380px;}
-  .phone-head{display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid #1D3A5C; margin-bottom:14px;}
-  .phone-avatar{width:34px; height:34px; border-radius:50%; background:var(--beam); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;}
+  .phone{background:var(--card); border:1px solid var(--line-strong); border-radius:16px; padding:18px; max-width:380px; box-shadow:0 30px 60px -24px rgba(0,0,0,.6);}
+  .phone-head{display:flex; align-items:center; gap:10px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:14px;}
+  .phone-avatar{width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--beam),var(--beam-deep)); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;}
   .phone-name{font-size:14px; font-weight:700;}
-  .phone-status{font-size:12px; color:#8FD4A6;}
-  .bubble{max-width:82%; padding:9px 13px; border-radius:3px; font-size:14px; margin-bottom:10px; line-height:1.4;}
-  .bubble-in{background:#16365A; margin-right:auto;}
-  .bubble-out{background:var(--beam); margin-left:auto;}
+  .phone-status{font-size:12px; color:var(--ok);}
+  .bubble{max-width:82%; padding:9px 13px; border-radius:12px; font-size:14px; margin-bottom:10px; line-height:1.4;}
+  .bubble-in{background:var(--paper-dim); border:1px solid var(--line); margin-right:auto; border-bottom-left-radius:3px;}
+  .bubble-out{background:linear-gradient(135deg,var(--beam),var(--beam-deep)); color:#fff; margin-left:auto; border-bottom-right-radius:3px;}
 
-  /* SOLUCION pillars removed — merged into Sistema. RESULTADO sigue igual */
   .steps{margin-top:44px; display:grid; grid-template-columns:repeat(4,1fr); gap:28px;}
   @media (max-width:820px){ .steps{grid-template-columns:1fr 1fr; gap:32px;} }
   @media (max-width:520px){ .steps{grid-template-columns:1fr;} }
@@ -136,12 +150,12 @@
   .step h3{margin-top:10px; font-size:15.5px; max-width:16ch;}
 
   /* COMPARATIVA */
-  .comp{display:grid; grid-template-columns:1fr 1fr; margin-top:44px; border:1.5px solid var(--ink);}
+  .comp{display:grid; grid-template-columns:1fr 1fr; margin-top:44px; border:1px solid var(--line-strong); border-radius:16px; overflow:hidden;}
   @media (max-width:700px){ .comp{grid-template-columns:1fr;} }
   .comp > div{padding:32px;}
-  .comp .otros{border-right:1.5px solid var(--ink); color:var(--ink-soft);}
-  @media (max-width:700px){ .comp .otros{border-right:none; border-bottom:1.5px solid var(--ink);} }
-  .comp .nosotros{background:var(--ink); color:#fff;}
+  .comp .otros{border-right:1px solid var(--line-strong); color:var(--ink-soft); background:var(--paper-dim);}
+  @media (max-width:700px){ .comp .otros{border-right:none; border-bottom:1px solid var(--line-strong);} }
+  .comp .nosotros{background:linear-gradient(160deg,var(--card),var(--paper-dim));}
   .comp h3{margin-bottom:16px; font-size:15px;}
   .comp ul{list-style:none; font-size:14.5px;}
   .comp li{padding:8px 0; display:flex; gap:12px;}
@@ -159,30 +173,31 @@
   .faq-item{padding:22px 0; border-top:1px solid var(--line);}
   .faq-item h3{margin-bottom:7px; font-size:15px;}
   .faq-item p{color:var(--ink-soft); font-size:14px;}
-  .pending{color:var(--slate); font-style:italic;}
+  .pending{color:var(--faint); font-style:italic;}
 
   /* LAUNCHPAD / FORM */
-  .launchpad{background:var(--ink); color:#fff;}
-  .launchpad h2{color:#fff;}
-  .launchpad .lede{color:#AFC2DA;}
+  .launchpad{background:var(--paper-dim); position:relative; overflow:hidden;}
+  .launchpad .glow2{position:absolute; bottom:-30%; right:-10%; width:600px; height:600px; border-radius:50%;
+    background:radial-gradient(circle, rgba(76,140,255,.2), transparent 65%); filter:blur(20px); pointer-events:none;}
+  .launchpad .wrap{position:relative;}
   .flow-strip{margin-top:36px; max-width:420px;}
-  .flow-label{fill:#9FB3CC; font-size:11px; font-family:inherit;}
+  .flow-label{fill:var(--ink-soft); font-size:11px; font-family:inherit;}
   .form-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:56px; margin-top:48px; align-items:start;}
   @media (max-width:820px){ .form-grid{grid-template-columns:1fr; gap:32px;} }
-  label{display:block; font-size:13px; color:#9FB3CC; margin-bottom:6px; margin-top:18px;}
+  label{display:block; font-size:13px; color:var(--ink-soft); margin-bottom:6px; margin-top:18px;}
   label:first-child{margin-top:0;}
   select, input[type=email], input[type=text], input[type=tel]{
-    width:100%; padding:12px 14px; border:1px solid #2A4567; background:#16365A;
-    color:#fff; font-size:14.5px; font-family:inherit;
+    width:100%; padding:12px 14px; border:1px solid var(--line-strong); border-radius:9px; background:var(--card);
+    color:var(--ink); font-size:14.5px; font-family:inherit;
   }
-  select:focus, input:focus{outline:none; border-color:var(--beam);}
+  select:focus, input:focus{outline:none; border-color:var(--beam); box-shadow:0 0 0 3px rgba(76,140,255,.15);}
   .form-submit{margin-top:24px;}
-  .form-submit button{width:100%;}
+  .form-submit button{width:100%; justify-content:center;}
   .form-msg{margin-top:14px; font-size:14px;}
-  .form-msg.ok{color:#8FD4A6;}
+  .form-msg.ok{color:var(--ok);}
   .form-msg.err{color:#F3A38C;}
-  .side-note p{font-size:15px; color:#AFC2DA; margin-top:16px; max-width:42ch;}
-  footer{padding:36px 0; text-align:left; color:var(--slate); font-size:12.5px; border-top:1px solid var(--line);}
+  .side-note p{font-size:15px; color:var(--ink-soft); margin-top:16px; max-width:42ch;}
+  footer{padding:36px 0; text-align:left; color:var(--faint); font-size:12.5px; border-top:1px solid var(--line);}
   footer .wordmark{color:var(--ink); margin-bottom:10px;}
 </style>
 </head>
@@ -207,6 +222,7 @@
 </header>
 
 <section class="hero">
+  <div class="hero-aurora" aria-hidden="true"></div>
   <div class="hero-bg" aria-hidden="true">
     <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
       <rect class="hero-cut" x="640" y="40" width="500" height="260" rx="2"></rect>
@@ -228,50 +244,57 @@
     </svg>
   </div>
   <div class="wrap hero-inner">
-    <h1>Máquinas láser <span class="cut">listas para producir</span> desde el primer día</h1>
-    <div class="hero-row">
-      <div class="badgerow">
-        <div><b>Sin experiencia</b>necesaria para operar desde el día 1</div>
-        <div><b>Empieza rápido</b>máquina configurada, no en pruebas</div>
-        <div><b>Sistema completo</b>no es solo hardware</div>
-      </div>
-      <div class="hero-side">
-        <p>Incluye formación completa + acceso a más de 500 diseños listos para usar.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-fill" href="#contacto">Solicitar información</a>
-          <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener">Hablar por WhatsApp</a>
-        </div>
-        <div class="hero-magnet">★ biblioteca de diseños gratuita al solicitar información</div>
-      </div>
+    <div class="hero-kicker">MÁQUINA · FORMACIÓN · DISEÑOS</div>
+    <h1>Máquinas láser listas para producir <span class="cut">desde el primer día.</span></h1>
+    <p class="hero-sub">Incluye formación completa + acceso a más de 500 diseños listos para usar. Sin experiencia previa.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-fill" href="#contacto">Solicitar información</a>
+      <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+    </div>
+    <div class="hero-magnet">★ biblioteca de diseños gratuita al solicitar información</div>
+
+    <div class="floatrow">
+      <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Vale para cortar acero inoxidable?</div></div>
+      <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Necesito experiencia previa?</div></div>
+      <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Sirve para grabar madera y cuero?</div></div>
+      <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Los diseños hay que editarlos?</div></div>
+      <div class="floatcard"><div class="tag">Cliente</div><div class="q">¿Cuánto tarda la entrega?</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="badgerow">
+      <div><b>Sin experiencia</b>necesaria para operar desde el día 1</div>
+      <div><b>Empieza rápido</b>máquina configurada, no en pruebas</div>
+      <div><b>Sistema completo</b>no es solo hardware</div>
     </div>
   </div>
 </section>
 
-<section id="problema" class="section-dim rule">
+<section id="problema" class="section-dim rule reveal">
   <div class="wrap">
     <h2>¿Por qué la mayoría falla al comprar una máquina láser?</h2>
     <div class="problem-list">
       <div class="problem-row">
-        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
         <div><h3>No saben usarla correctamente</h3><p>Compran una máquina sin saber cómo sacarle partido real.</p></div>
       </div>
       <div class="problem-row">
-        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
         <div><h3>No tienen diseños listos</h3><p>Pierden semanas buscando o creando archivos desde cero.</p></div>
       </div>
       <div class="problem-row">
-        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
         <div><h3>No saben qué fabricar</h3><p>Sin estrategia de producto, la máquina acumula polvo.</p></div>
       </div>
       <div class="problem-row">
-        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#B23A3A" stroke-width="2"/></svg>
+        <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
         <div><h3>Pierden tiempo y dinero</h3><p>Meses de prueba y error antes de generar el primer ingreso.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="sistema">
+<section id="sistema" class="reveal">
   <div class="wrap">
     <h2>Un sistema completo, no solo una máquina</h2>
     <p class="lede">Cada bloque es una pieza real. Ábrela para ver exactamente qué incluye.</p>
@@ -358,7 +381,7 @@
   </div>
 </section>
 
-<section class="demo section-dim" style="background:var(--ink);">
+<section class="demo section-dim reveal">
   <div class="wrap demo-grid">
     <div>
       <h2>Quien te escribe, te contesta — nosotros, no un bot</h2>
@@ -382,7 +405,7 @@
   </div>
 </section>
 
-<section id="resultado">
+<section id="resultado" class="reveal">
   <div class="wrap">
     <h2>Lo que consigues con este sistema</h2>
     <div class="steps">
@@ -394,7 +417,7 @@
   </div>
 </section>
 
-<section class="section-dim rule">
+<section class="section-dim rule reveal">
   <div class="wrap">
     <h2>La diferencia</h2>
     <div class="comp">
@@ -420,7 +443,7 @@
   </div>
 </section>
 
-<section>
+<section class="reveal">
   <div class="wrap">
     <div class="trust">
       <div><div class="trust-n">500+</div><div class="trust-l">diseños listos en la biblioteca</div></div>
@@ -430,7 +453,7 @@
   </div>
 </section>
 
-<section id="faq" class="section-dim rule">
+<section id="faq" class="section-dim rule reveal">
   <div class="wrap">
     <h2>Antes de que preguntes</h2>
     <div class="faq">
@@ -444,7 +467,8 @@
   </div>
 </section>
 
-<section id="contacto" class="launchpad">
+<section id="contacto" class="launchpad reveal">
+  <div class="glow2" aria-hidden="true"></div>
   <div class="wrap">
     <h2>Empieza a producir hoy</h2>
     <p class="lede">Déjanos tu email y te enviaremos toda la información sin compromiso.</p>
@@ -452,13 +476,13 @@
     <svg class="flow-strip" viewBox="0 0 360 76" width="100%" height="76" aria-hidden="true">
       <defs>
         <marker id="flow-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0,0 L10,5 L0,10 Z" fill="#2F6FED"></path>
+          <path d="M0,0 L10,5 L0,10 Z" fill="#4C8CFF"></path>
         </marker>
       </defs>
-      <path d="M28,36 L178,36 L332,36" fill="none" stroke="#2F6FED" stroke-opacity="0.35" stroke-width="2" marker-end="url(#flow-arrow)"></path>
-      <circle cx="28" cy="36" r="7" fill="#0E2A4A" stroke="#2F6FED" stroke-width="2"></circle>
-      <circle cx="178" cy="36" r="7" fill="#0E2A4A" stroke="#2F6FED" stroke-width="2"></circle>
-      <circle cx="332" cy="36" r="7" fill="#0E2A4A" stroke="#2F6FED" stroke-width="2"></circle>
+      <path d="M28,36 L178,36 L332,36" fill="none" stroke="#4C8CFF" stroke-opacity="0.35" stroke-width="2" marker-end="url(#flow-arrow)"></path>
+      <circle cx="28" cy="36" r="7" fill="#0A1630" stroke="#4C8CFF" stroke-width="2"></circle>
+      <circle cx="178" cy="36" r="7" fill="#0A1630" stroke="#4C8CFF" stroke-width="2"></circle>
+      <circle cx="332" cy="36" r="7" fill="#0A1630" stroke="#4C8CFF" stroke-width="2"></circle>
       <text x="28" y="60" text-anchor="middle" class="flow-label">Solicitas info</text>
       <text x="178" y="60" text-anchor="middle" class="flow-label">Te contactamos &lt;24h</text>
       <text x="332" y="60" text-anchor="middle" class="flow-label">Visita o llamada</text>
@@ -492,9 +516,9 @@
       </form>
 
       <div class="side-note">
-        <h3 style="color:#fff;">O escríbenos directo</h3>
+        <h3>O escríbenos directo</h3>
         <p>Si quieres avanzar más rápido que un formulario, escríbenos directamente por WhatsApp — respondemos nosotros, no un bot.</p>
-        <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener" style="margin-top:18px; display:inline-block; border-color:#2A4567; color:#fff;">Hablar por WhatsApp</a>
+        <a class="btn btn-line" href="https://wa.me/34633565638?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20m%C3%A1quinas%20l%C3%A1ser" target="_blank" rel="noopener" style="margin-top:18px; display:inline-block;">Hablar por WhatsApp</a>
       </div>
     </div>
   </div>
@@ -531,6 +555,21 @@
       });
       btn.addEventListener('mouseleave', function () { btn.style.transform = 'translate(0,0)'; });
     });
+  }
+
+  // Revelado de secciones al hacer scroll
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
   }
 
   // Acordeon "Sistema" — un solo panel abierto a la vez
