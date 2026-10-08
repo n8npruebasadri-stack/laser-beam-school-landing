@@ -132,6 +132,19 @@
   @media (max-width:640px){ .sys-panel-inner{padding-left:4px;} }
   .sys-panel-inner ul{margin-top:8px; padding-left:18px;}
   .sys-panel-inner li{padding:3px 0;}
+  .sys-panel-media{display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:none; align-items:start;}
+  @media (max-width:760px){ .sys-panel-media{grid-template-columns:1fr;} }
+  .sys-gallery{display:grid; grid-template-columns:1fr 1fr; gap:10px; perspective:900px;}
+  .sys-gallery-single{grid-template-columns:1fr;}
+  .sys-gallery img{
+    width:100%; height:130px; object-fit:cover; border-radius:12px; border:1px solid var(--line-strong);
+    box-shadow:0 18px 36px -16px rgba(0,0,0,.6); transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .sys-gallery-single img{height:190px;}
+
+  /* Efecto 3D generico: ladea la tarjeta siguiendo el cursor */
+  .tilt-3d{transform-style:preserve-3d; will-change:transform;}
+  .tilt-3d:hover{border-color:var(--beam); box-shadow:0 24px 48px -16px var(--glow);}
 
   /* DEMO REAL — whatsapp mockup */
   .demo .lede{color:var(--ink-soft);}
@@ -294,13 +307,19 @@
           <svg class="sys-chevron" viewBox="0 0 18 18" fill="none"><path d="M4.5 7L9 11.5L13.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sys-panel" id="panel-1" role="region" aria-labelledby="trigger-1">
-          <div class="sys-panel-inner">
-            <p>Fibra para metal, CO₂ para madera, acrílico, cuero y textil — la eliges según lo que vas a producir.</p>
-            <ul>
-              <li>Adaptada a tu negocio, no un modelo genérico</li>
-              <li>Directa de fábrica</li>
-              <li>Configurada y lista para producción desde la entrega</li>
-            </ul>
+          <div class="sys-panel-inner sys-panel-media">
+            <div class="sys-text">
+              <p>Fibra para metal, CO₂ para madera, acrílico, cuero y textil — la eliges según lo que vas a producir.</p>
+              <ul>
+                <li>Adaptada a tu negocio, no un modelo genérico</li>
+                <li>Directa de fábrica</li>
+                <li>Configurada y lista para producción desde la entrega</li>
+              </ul>
+            </div>
+            <div class="sys-gallery">
+              <img class="tilt-3d" src="images/maquina-fibra-corte.jpg" alt="Máquina láser de fibra cortando una pieza metálica, chispas saltando del corte" loading="lazy">
+              <img class="tilt-3d" src="images/maquina-cnc-detalle.jpg" alt="Detalle del cabezal de una máquina láser CNC industrial" loading="lazy">
+            </div>
           </div>
         </div>
       </div>
@@ -332,13 +351,18 @@
           <svg class="sys-chevron" viewBox="0 0 18 18" fill="none"><path d="M4.5 7L9 11.5L13.5 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
         <div class="sys-panel" id="panel-3" role="region" aria-labelledby="trigger-3">
-          <div class="sys-panel-inner">
-            <p>Diseños clasificados por sector, sin que tengas que crear ni editar nada antes de producir.</p>
-            <ul>
-              <li>Clasificados por sector: regalo, hostelería, eventos, empresa, decoración</li>
-              <li>Sin edición previa — cargas el archivo y fabricas</li>
-              <li>Biblioteca actualizada de forma periódica</li>
-            </ul>
+          <div class="sys-panel-inner sys-panel-media">
+            <div class="sys-text">
+              <p>Diseños clasificados por sector, sin que tengas que crear ni editar nada antes de producir.</p>
+              <ul>
+                <li>Clasificados por sector: regalo, hostelería, eventos, empresa, decoración</li>
+                <li>Sin edición previa — cargas el archivo y fabricas</li>
+                <li>Biblioteca actualizada de forma periódica</li>
+              </ul>
+            </div>
+            <div class="sys-gallery sys-gallery-single">
+              <img class="tilt-3d" src="images/maquina-grabado.jpg" alt="Diseño grabado con láser sobre madera" loading="lazy">
+            </div>
           </div>
         </div>
       </div>
@@ -378,7 +402,7 @@
         <li>Compromiso de respuesta en menos de 24h</li>
       </ul>
     </div>
-    <div class="phone">
+    <div class="phone tilt-3d">
       <div class="phone-head">
         <div class="phone-avatar">LB</div>
         <div><p class="phone-name">Laser Beam School</p><p class="phone-status">● responde el equipo</p></div>
@@ -395,10 +419,10 @@
   <div class="wrap">
     <h2>Lo que consigues con este sistema</h2>
     <div class="steps">
-      <div class="step"><div class="num">01</div><h3>Produces desde el primer día</h3></div>
-      <div class="step"><div class="num">02</div><h3>Ahorras semanas de aprendizaje</h3></div>
-      <div class="step"><div class="num">03</div><h3>No necesitas diseñar desde cero</h3></div>
-      <div class="step"><div class="num">04</div><h3>Te centras en vender</h3></div>
+      <div class="step tilt-3d"><div class="num">01</div><h3>Produces desde el primer día</h3></div>
+      <div class="step tilt-3d"><div class="num">02</div><h3>Ahorras semanas de aprendizaje</h3></div>
+      <div class="step tilt-3d"><div class="num">03</div><h3>No necesitas diseñar desde cero</h3></div>
+      <div class="step tilt-3d"><div class="num">04</div><h3>Te centras en vender</h3></div>
     </div>
   </div>
 </section>
@@ -407,7 +431,7 @@
   <div class="wrap">
     <h2>La diferencia</h2>
     <div class="comp">
-      <div class="otros">
+      <div class="otros tilt-3d">
         <h3>Otros</h3>
         <ul>
           <li>Solo venden máquinas</li>
@@ -416,7 +440,7 @@
           <li>Semanas para empezar</li>
         </ul>
       </div>
-      <div class="nosotros">
+      <div class="nosotros tilt-3d">
         <h3>Laser Beam School</h3>
         <ul>
           <li>Máquina adaptada a ti</li>
@@ -498,6 +522,7 @@
           <option value="Estoy explorando opciones">Estoy explorando opciones, sin prisa</option>
         </select>
         <div class="form-submit"><button type="submit" class="btn btn-fill">Solicitar información</button></div>
+        <p style="font-size:12.5px; color:var(--faint); margin-top:10px;">Al enviar este formulario aceptas nuestra <a href="politica-privacidad.html" style="color:var(--ink-soft); text-decoration:underline;">política de privacidad</a>.</p>
         <div class="form-msg" id="form-msg"></div>
       </form>
 
@@ -516,6 +541,10 @@
     <div class="pending">[PENDIENTE: razón social Laser Beam School SL · CIF · dirección fiscal]</div>
     <div class="pending">[PENDIENTE: email corporativo real]</div>
     <div style="margin-top:8px;">WhatsApp: +34 633 56 56 38</div>
+    <div style="margin-top:14px; display:flex; gap:18px;">
+      <a href="politica-privacidad.html" style="color:var(--ink-soft);">Política de privacidad</a>
+      <a href="terminos-servicio.html" style="color:var(--ink-soft);">Términos de servicio</a>
+    </div>
   </div>
 </footer>
 
@@ -556,6 +585,19 @@
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+  }
+
+  // Efecto 3D: las tarjetas marcadas .tilt-3d se inclinan siguiendo el cursor
+  if (!reduceMotion && finePointer) {
+    document.querySelectorAll('.tilt-3d').forEach(function (el) {
+      el.addEventListener('mousemove', function (e) {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = 'perspective(700px) rotateX(' + (-py * 10).toFixed(2) + 'deg) rotateY(' + (px * 10).toFixed(2) + 'deg) translateZ(6px)';
+      });
+      el.addEventListener('mouseleave', function () { el.style.transform = ''; });
+    });
   }
 
   // Acordeon "Sistema" — un solo panel abierto a la vez
