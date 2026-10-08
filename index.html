@@ -61,11 +61,6 @@
     background:radial-gradient(circle, rgba(76,140,255,.3), rgba(76,140,255,.08) 45%, transparent 68%);
     filter:blur(10px); z-index:0; pointer-events:none; animation:auroraPulse 7s ease-in-out infinite;}
   @keyframes auroraPulse{0%,100%{opacity:.75; transform:translateX(-50%) scale(1);} 50%{opacity:1; transform:translateX(-50%) scale(1.07);}}
-  .hero-bg{position:absolute; inset:0; z-index:0; pointer-events:none;}
-  .hero-bg svg{width:100%; height:100%; opacity:.4;}
-  .hero-cut{fill:none; stroke:var(--line-strong); stroke-width:1.5;}
-  .hero-node{fill:var(--paper); stroke:var(--beam); stroke-width:1.5;}
-  .hero-light{fill:var(--beam);}
   .hero-inner{position:relative; z-index:1; text-align:center;}
   .hero-kicker{font-size:12.5px; letter-spacing:.14em; color:var(--beam); font-weight:700; margin-bottom:18px;}
   .hero h1{font-size:clamp(40px,7.4vw,84px); line-height:1.03; letter-spacing:-0.025em; max-width:17ch; margin:0 auto;}
@@ -74,25 +69,36 @@
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:32px;}
   .hero-magnet{font-size:13px; color:var(--faint); margin-top:16px;}
 
-  .floatrow{position:relative; z-index:1; display:flex; justify-content:center; gap:16px; margin-top:92px; flex-wrap:nowrap; max-width:1040px; margin-left:auto; margin-right:auto; padding:0 12px;}
-  .floatcard{
-    background:var(--card); border:1px solid var(--line-strong); border-radius:12px; padding:14px 16px; width:170px; flex-shrink:0;
-    box-shadow:0 20px 40px -16px rgba(0,0,0,.55); transition:transform .25s ease;
+  .floatrow{
+    position:relative; z-index:1; display:flex; justify-content:center; align-items:center; gap:22px; margin-top:100px;
+    flex-wrap:nowrap; max-width:1180px; margin-left:auto; margin-right:auto; padding:0 12px 20px;
+    perspective:1400px;
   }
-  .floatcard:nth-child(odd){transform:translateY(-10px) rotate(-2.5deg);}
-  .floatcard:nth-child(even){transform:translateY(14px) rotate(2deg);}
-  .floatcard:nth-child(3n){transform:translateY(-4px) rotate(-1deg);}
-  .floatcard:hover{transform:translateY(-6px) rotate(0deg) scale(1.04); border-color:var(--beam);}
-  .floatcard .tag{font-size:10px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase; margin-bottom:6px;}
-  .floatcard .q{font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.3;}
-  @media (max-width:900px){ .floatrow{display:grid; grid-template-columns:repeat(3,1fr); max-width:420px; gap:12px;} .floatcard{width:auto; transform:none !important;} .floatcard:hover{transform:translateY(-4px) !important;} }
-  @media (max-width:520px){ .floatrow{grid-template-columns:repeat(2,1fr);} }
+  .floatcard{
+    background:linear-gradient(160deg,var(--card),var(--paper-dim)); border:1px solid var(--line-strong); border-radius:14px;
+    padding:18px 20px; width:206px; flex-shrink:0; transform-style:preserve-3d;
+    box-shadow:0 26px 50px -18px rgba(0,0,0,.65); transition:transform .35s cubic-bezier(.4,0,.2,1), border-color .25s ease, box-shadow .35s ease;
+  }
+  /* Arco 3D: las tarjetas de los extremos se inclinan hacia dentro, como una cinta curva */
+  .floatrow .floatcard:nth-child(1){transform:translateY(10px) translateZ(-60px) rotateY(24deg) rotate(-2deg);}
+  .floatrow .floatcard:nth-child(2){transform:translateY(-8px) translateZ(-18px) rotateY(12deg) rotate(-1deg);}
+  .floatrow .floatcard:nth-child(3){transform:translateY(-16px) translateZ(10px) rotateY(0deg);}
+  .floatrow .floatcard:nth-child(4){transform:translateY(-6px) translateZ(-18px) rotateY(-12deg) rotate(1deg);}
+  .floatrow .floatcard:nth-child(5){transform:translateY(12px) translateZ(-60px) rotateY(-24deg) rotate(2deg);}
+  .floatcard:hover{
+    transform:translateY(-10px) translateZ(30px) rotateY(0deg) rotate(0deg) scale(1.05) !important;
+    border-color:var(--beam); box-shadow:0 30px 60px -16px var(--glow);
+  }
+  .floatcard .tag{font-size:10.5px; letter-spacing:.06em; color:var(--faint); text-transform:uppercase; margin-bottom:8px;}
+  .floatcard .q{font-size:15px; font-weight:600; color:var(--ink); line-height:1.35;}
+  @media (max-width:980px){ .floatrow{display:grid; grid-template-columns:repeat(3,1fr); max-width:520px; gap:14px; perspective:none;} .floatcard{width:auto;} .floatrow .floatcard{transform:none !important;} .floatcard:hover{transform:translateY(-4px) scale(1.02) !important;} }
+  @media (max-width:560px){ .floatrow{grid-template-columns:repeat(2,1fr);} }
 
   .badgerow{display:flex; gap:48px; margin-top:72px; flex-wrap:wrap; justify-content:center; position:relative; z-index:1;}
   .badgerow div{font-size:14.5px; color:var(--ink-soft); max-width:22ch; text-align:left;}
   .badgerow b{display:block; color:var(--ink); font-size:15.5px; margin-bottom:3px;}
 
-  @media (prefers-reduced-motion:reduce){ .hero h1 .cut::after{animation:none; transform:scaleX(1);} .hero-light, .hero-node, .hero-aurora{animation:none !important;} }
+  @media (prefers-reduced-motion:reduce){ .hero-aurora{animation:none !important;} .floatcard{transition:none !important;} }
 
   /* Reveal al hacer scroll */
   .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.4,0,.2,1), transform .7s cubic-bezier(.4,0,.2,1);}
@@ -223,26 +229,6 @@
 
 <section class="hero">
   <div class="hero-aurora" aria-hidden="true"></div>
-  <div class="hero-bg" aria-hidden="true">
-    <svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
-      <rect class="hero-cut" x="640" y="40" width="500" height="260" rx="2"></rect>
-      <rect class="hero-cut" x="760" y="300" width="380" height="240" rx="2"></rect>
-      <circle class="hero-node" cx="640" cy="40" r="5"></circle>
-      <circle class="hero-node" cx="1140" cy="40" r="5"></circle>
-      <circle class="hero-node" cx="1140" cy="300" r="5"></circle>
-      <circle class="hero-node" cx="640" cy="300" r="5"></circle>
-      <circle class="hero-node" cx="760" cy="300" r="5"></circle>
-      <circle class="hero-node" cx="1140" cy="300" r="5"></circle>
-      <circle class="hero-node" cx="1140" cy="540" r="5"></circle>
-      <circle class="hero-node" cx="760" cy="540" r="5"></circle>
-      <circle class="hero-light" r="4">
-        <animateMotion dur="7s" repeatCount="indefinite" path="M640,40 L1140,40 L1140,300 L640,300 Z"></animateMotion>
-      </circle>
-      <circle class="hero-light" r="3.5">
-        <animateMotion dur="6s" repeatCount="indefinite" path="M760,300 L1140,300 L1140,540 L760,540 Z"></animateMotion>
-      </circle>
-    </svg>
-  </div>
   <div class="wrap hero-inner">
     <div class="hero-kicker">MÁQUINA · FORMACIÓN · DISEÑOS</div>
     <h1>Máquinas láser listas para producir <span class="cut">desde el primer día.</span></h1>
