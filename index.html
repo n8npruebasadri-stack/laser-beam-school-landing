@@ -107,31 +107,43 @@
 
   /* DIAGNOSTICO */
   .section-dim{background:var(--paper-dim);}
-  .problem-list{margin-top:44px; display:grid; gap:0;}
-  .problem-row{display:grid; grid-template-columns:30px 1fr; gap:18px; padding:26px 0; border-top:1px solid var(--line);}
-  .problem-row:last-child{border-bottom:1px solid var(--line);}
-  .cutmark{width:16px; height:16px; margin-top:4px; flex-shrink:0;}
-  .problem-row h3{margin-bottom:5px;}
-  .problem-row p{color:var(--ink-soft); font-size:15px;}
+  #problema h2{max-width:900px; font-size:clamp(32px,5vw,54px);}
+  .problem-grid{margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:760px){ .problem-grid{grid-template-columns:1fr;} }
+  .problem-card{
+    background:linear-gradient(160deg,var(--card),var(--paper-dim)); border:1px solid var(--line-strong); border-radius:18px;
+    padding:32px; box-shadow:0 20px 44px -20px rgba(0,0,0,.6); transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .problem-card:hover{border-color:#FF5C6C; box-shadow:0 26px 54px -18px rgba(255,92,108,.3);}
+  .cutmark{width:22px; height:22px; margin-bottom:16px;}
+  .problem-card h3{font-size:22px; margin-bottom:10px;}
+  .problem-card p{color:var(--ink-soft); font-size:16.5px; max-width:36ch;}
 
-  /* SISTEMA — acordeon */
-  .sys-list{margin-top:44px; border-top:1px solid var(--line);}
-  .sys-item{border-bottom:1px solid var(--line);}
+  /* SISTEMA — 4 tarjetas cuadradas flotantes */
+  #sistema h2{max-width:900px; font-size:clamp(32px,5vw,54px);}
+  .sys-list{margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:760px){ .sys-list{grid-template-columns:1fr;} }
+  .sys-item{
+    background:linear-gradient(160deg,var(--card),var(--paper-dim)); border:1px solid var(--line-strong); border-radius:18px;
+    overflow:hidden; box-shadow:0 20px 44px -20px rgba(0,0,0,.6); transition:border-color .25s ease, box-shadow .25s ease, grid-column .2s ease;
+  }
+  .sys-item.open{grid-column:1 / -1; border-color:var(--beam);}
+  .sys-item:hover{border-color:var(--beam);}
   .sys-trigger{
     width:100%; display:grid; grid-template-columns:40px 1fr auto 24px; align-items:center; gap:18px;
-    padding:24px 4px; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; color:var(--ink);
+    padding:28px; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; color:var(--ink);
   }
-  .sys-num{font-size:14px; color:var(--faint); font-weight:700;}
-  .sys-title{font-size:18px; font-weight:800; letter-spacing:-0.01em;}
+  .sys-num{font-size:15px; color:var(--faint); font-weight:700;}
+  .sys-title{font-size:20px; font-weight:800; letter-spacing:-0.01em;}
   .sys-result{font-size:13.5px; color:var(--beam); font-weight:600; white-space:nowrap;}
   @media (max-width:640px){ .sys-result{display:none;} }
   .sys-chevron{width:16px; height:16px; transition:transform .2s ease; flex-shrink:0; color:var(--ink-soft);}
   .sys-trigger[aria-expanded="true"] .sys-chevron{transform:rotate(180deg); color:var(--beam);}
   .sys-panel{max-height:0; overflow:hidden; transition:max-height .3s ease;}
-  .sys-panel-inner{padding:0 4px 28px 58px; color:var(--ink-soft); font-size:15px; max-width:56ch;}
-  @media (max-width:640px){ .sys-panel-inner{padding-left:4px;} }
+  .sys-panel-inner{padding:0 28px 32px 86px; color:var(--ink-soft); font-size:16px; max-width:68ch;}
+  @media (max-width:640px){ .sys-panel-inner{padding-left:28px;} }
   .sys-panel-inner ul{margin-top:8px; padding-left:18px;}
-  .sys-panel-inner li{padding:3px 0;}
+  .sys-panel-inner li{padding:4px 0;}
   .sys-panel-media{display:grid; grid-template-columns:1fr 1fr; gap:28px; max-width:none; align-items:start;}
   @media (max-width:760px){ .sys-panel-media{grid-template-columns:1fr;} }
   .sys-gallery{display:grid; grid-template-columns:1fr 1fr; gap:10px; perspective:900px;}
@@ -168,18 +180,20 @@
   .step .num{font-size:30px; font-weight:800; color:var(--beam); letter-spacing:-0.02em;}
   .step h3{margin-top:10px; font-size:15.5px; max-width:16ch;}
 
-  /* COMPARATIVA */
-  .comp{display:grid; grid-template-columns:1fr 1fr; margin-top:44px; border:1px solid var(--line-strong); border-radius:16px; overflow:hidden;}
-  @media (max-width:700px){ .comp{grid-template-columns:1fr;} }
-  .comp > div{padding:32px;}
-  .comp .otros{border-right:1px solid var(--line-strong); color:var(--ink-soft); background:var(--paper-dim);}
-  @media (max-width:700px){ .comp .otros{border-right:none; border-bottom:1px solid var(--line-strong);} }
-  .comp .nosotros{background:linear-gradient(160deg,var(--card),var(--paper-dim));}
-  .comp h3{margin-bottom:16px; font-size:15px;}
-  .comp ul{list-style:none; font-size:14.5px;}
-  .comp li{padding:8px 0; display:flex; gap:12px;}
-  .comp .otros li::before{content:"–"; color:var(--bad); font-weight:800;}
-  .comp .nosotros li::before{content:"+"; color:var(--beam); font-weight:800;}
+  /* COMPARATIVA — tarjetas blancas individuales en 3D sobre fondo azul */
+  #diferencia h2{max-width:900px; font-size:clamp(32px,5vw,54px);}
+  .comp-wrap{display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:48px;}
+  @media (max-width:760px){ .comp-wrap{grid-template-columns:1fr; gap:36px;} }
+  .comp-col h3{font-size:24px; margin-bottom:20px;}
+  .comp-card{
+    display:flex; align-items:center; gap:12px; background:#fff; color:var(--beam-deep); font-weight:700; font-size:16.5px;
+    border-radius:14px; padding:20px 22px; margin-bottom:14px; box-shadow:0 22px 46px -18px rgba(0,0,0,.55);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .comp-card:hover{box-shadow:0 26px 52px -16px rgba(0,0,0,.65);}
+  .comp-card .mark{font-weight:900; font-size:18px; flex-shrink:0;}
+  .comp-card.bad .mark{color:#D6342A;}
+  .comp-card.good .mark{color:var(--beam-deep);}
 
   /* TRUST STRIP */
   .trust{display:flex; gap:56px; margin-top:8px; flex-wrap:wrap;}
@@ -272,22 +286,22 @@
 <section id="problema" class="section-dim rule reveal">
   <div class="wrap">
     <h2>¿Por qué la mayoría falla al comprar una máquina láser?</h2>
-    <div class="problem-list">
-      <div class="problem-row">
+    <div class="problem-grid">
+      <div class="problem-card tilt-3d">
         <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
-        <div><h3>No saben usarla correctamente</h3><p>Compran una máquina sin saber cómo sacarle partido real.</p></div>
+        <h3>No saben usarla correctamente</h3><p>Compran una máquina sin saber cómo sacarle partido real.</p>
       </div>
-      <div class="problem-row">
+      <div class="problem-card tilt-3d">
         <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
-        <div><h3>No tienen diseños listos</h3><p>Pierden semanas buscando o creando archivos desde cero.</p></div>
+        <h3>No tienen diseños listos</h3><p>Pierden semanas buscando o creando archivos desde cero.</p>
       </div>
-      <div class="problem-row">
+      <div class="problem-card tilt-3d">
         <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
-        <div><h3>No saben qué fabricar</h3><p>Sin estrategia de producto, la máquina acumula polvo.</p></div>
+        <h3>No saben qué fabricar</h3><p>Sin estrategia de producto, la máquina acumula polvo.</p>
       </div>
-      <div class="problem-row">
+      <div class="problem-card tilt-3d">
         <svg class="cutmark" viewBox="0 0 16 16"><line x1="2" y1="14" x2="14" y2="2" stroke="#FF5C6C" stroke-width="2"/></svg>
-        <div><h3>Pierden tiempo y dinero</h3><p>Meses de prueba y error antes de generar el primer ingreso.</p></div>
+        <h3>Pierden tiempo y dinero</h3><p>Meses de prueba y error antes de generar el primer ingreso.</p>
       </div>
     </div>
   </div>
@@ -299,7 +313,7 @@
     <p class="lede">Cada bloque es una pieza real. Ábrela para ver exactamente qué incluye.</p>
     <div class="sys-list" id="sys-list">
 
-      <div class="sys-item">
+      <div class="sys-item tilt-3d open">
         <button class="sys-trigger" aria-expanded="true" aria-controls="panel-1" id="trigger-1">
           <span class="sys-num">01</span>
           <span class="sys-title">Máquina adaptada a tu negocio</span>
@@ -324,7 +338,7 @@
         </div>
       </div>
 
-      <div class="sys-item">
+      <div class="sys-item tilt-3d">
         <button class="sys-trigger" aria-expanded="false" aria-controls="panel-2" id="trigger-2">
           <span class="sys-num">02</span>
           <span class="sys-title">Formación paso a paso</span>
@@ -343,7 +357,7 @@
         </div>
       </div>
 
-      <div class="sys-item">
+      <div class="sys-item tilt-3d">
         <button class="sys-trigger" aria-expanded="false" aria-controls="panel-3" id="trigger-3">
           <span class="sys-num">03</span>
           <span class="sys-title">Biblioteca de +500 diseños</span>
@@ -367,7 +381,7 @@
         </div>
       </div>
 
-      <div class="sys-item">
+      <div class="sys-item tilt-3d">
         <button class="sys-trigger" aria-expanded="false" aria-controls="panel-4" id="trigger-4">
           <span class="sys-num">04</span>
           <span class="sys-title">Soporte continuo</span>
@@ -427,27 +441,23 @@
   </div>
 </section>
 
-<section class="section-dim rule reveal">
+<section id="diferencia" class="section-dim rule reveal">
   <div class="wrap">
     <h2>La diferencia</h2>
-    <div class="comp">
-      <div class="otros tilt-3d">
+    <div class="comp-wrap">
+      <div class="comp-col">
         <h3>Otros</h3>
-        <ul>
-          <li>Solo venden máquinas</li>
-          <li>Sin formación incluida</li>
-          <li>Sin biblioteca de diseños</li>
-          <li>Semanas para empezar</li>
-        </ul>
+        <div class="comp-card bad tilt-3d"><span class="mark">✕</span>Solo venden máquinas</div>
+        <div class="comp-card bad tilt-3d"><span class="mark">✕</span>Sin formación incluida</div>
+        <div class="comp-card bad tilt-3d"><span class="mark">✕</span>Sin biblioteca de diseños</div>
+        <div class="comp-card bad tilt-3d"><span class="mark">✕</span>Semanas para empezar</div>
       </div>
-      <div class="nosotros tilt-3d">
+      <div class="comp-col">
         <h3>Laser Beam School</h3>
-        <ul>
-          <li>Máquina adaptada a ti</li>
-          <li>Formación completa incluida</li>
-          <li>Biblioteca de diseños incluida</li>
-          <li>Produces desde el día 1</li>
-        </ul>
+        <div class="comp-card good tilt-3d"><span class="mark">✓</span>Máquina adaptada a ti</div>
+        <div class="comp-card good tilt-3d"><span class="mark">✓</span>Formación completa incluida</div>
+        <div class="comp-card good tilt-3d"><span class="mark">✓</span>Biblioteca de diseños incluida</div>
+        <div class="comp-card good tilt-3d"><span class="mark">✓</span>Produces desde el día 1</div>
       </div>
     </div>
   </div>
@@ -600,12 +610,14 @@
     });
   }
 
-  // Acordeon "Sistema" — un solo panel abierto a la vez
+  // Sistema: 4 tarjetas flotantes — un solo panel abierto a la vez, se expande a ancho completo
   document.querySelectorAll('.sys-trigger').forEach(function (btn) {
     const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    const card = btn.closest('.sys-item');
     function setOpen(open){
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
       panel.style.maxHeight = open ? panel.scrollHeight + 'px' : '0px';
+      card.classList.toggle('open', open);
     }
     setOpen(btn.getAttribute('aria-expanded') === 'true');
     btn.addEventListener('click', function () {
@@ -615,6 +627,7 @@
           const otherPanel = document.getElementById(other.getAttribute('aria-controls'));
           other.setAttribute('aria-expanded', 'false');
           otherPanel.style.maxHeight = '0px';
+          other.closest('.sys-item').classList.remove('open');
         }
       });
       setOpen(willOpen);
