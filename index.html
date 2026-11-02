@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laser Beam School — Máquinas láser industriales listas para producir desde el primer día</title>
+<link rel="icon" type="image/png" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
 <meta name="description" content="Máquina láser + formación + biblioteca de 500 diseños. Sistema completo para producir desde el primer día.">
 <style>
   :root{
@@ -37,10 +39,12 @@
   .trace:hover::after{width:100%;}
 
   header{position:sticky; top:0; background:rgba(6,13,28,.75); backdrop-filter:blur(10px); z-index:50; border-bottom:1px solid var(--line);}
-  nav{display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding:18px 28px;}
+  nav{display:flex; align-items:center; justify-content:space-between; max-width:1120px; margin:0 auto; padding:8px 28px;}
   .wordmark{font-weight:800; font-size:17px; letter-spacing:-.01em; display:flex; align-items:center; gap:9px;}
   .wordmark .dot{color:var(--beam);}
-  .brandmark{flex-shrink:0;}
+  .brandlogo-link{display:block; line-height:0;}
+  .brandlogo{display:block; height:54px; width:auto;}
+  .brandlogo-foot{height:78px; margin:0 0 12px -4px;}
   footer .wordmark{font-size:18px;}
   footer .brandmark{width:34px; height:34px;}
   .navlinks{display:flex; gap:28px; font-size:14px; color:var(--ink-soft);}
@@ -56,7 +60,7 @@
   .btn-fill:hover{box-shadow:0 8px 28px -6px var(--glow);}
   .btn-line:hover{border-color:var(--beam); color:var(--beam);}
   .navcta{display:flex; gap:10px;}
-  @media (max-width:520px){ .navcta .btn{padding:10px 16px; font-size:13px;} }
+  @media (max-width:520px){ nav{padding:8px 14px;} .brandlogo{height:42px;} .brandlogo-foot{height:78px;} .navcta{gap:6px;} .navcta .btn{padding:9px 11px; font-size:12.5px;} }
 
   /* HERO */
   .hero{position:relative; padding:72px 0 88px; overflow:hidden;}
@@ -266,17 +270,7 @@
 
 <header>
   <nav>
-    <div class="wordmark">
-      <svg class="brandmark" width="26" height="26" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <line x1="10" y1="14" x2="54" y2="14" stroke="#93A8CC" stroke-width="6" stroke-linecap="round"/>
-        <line x1="32" y1="14" x2="32" y2="30" stroke="#93A8CC" stroke-width="5" stroke-linecap="round"/>
-        <rect x="26" y="28" width="12" height="10" rx="3" fill="#0C1A38" stroke="#93A8CC" stroke-width="2"/>
-        <line x1="32" y1="38" x2="32" y2="50" stroke="#4C8CFF" stroke-width="10" stroke-linecap="round" opacity="0.22"/>
-        <line x1="32" y1="38" x2="32" y2="50" stroke="#4C8CFF" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="32" cy="50" r="3" fill="#F2F6FF"/>
-      </svg>
-      LASER BEAM SCHOOL<span class="dot">.</span>
-    </div>
+    <a class="brandlogo-link" href="#" aria-label="Laser Beam School, inicio"><img class="brandlogo" src="images/logo.png" alt="Laser Beam School" width="720" height="262"></a>
     <div class="navlinks">
       <a class="trace" href="#problema">Problema</a>
       <a class="trace" href="#sistema">Sistema</a>
@@ -610,17 +604,7 @@
 
 <footer>
   <div class="wrap">
-    <div class="wordmark">
-      <svg class="brandmark" width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <line x1="10" y1="14" x2="54" y2="14" stroke="#93A8CC" stroke-width="6" stroke-linecap="round"/>
-        <line x1="32" y1="14" x2="32" y2="30" stroke="#93A8CC" stroke-width="5" stroke-linecap="round"/>
-        <rect x="26" y="28" width="12" height="10" rx="3" fill="#0C1A38" stroke="#93A8CC" stroke-width="2"/>
-        <line x1="32" y1="38" x2="32" y2="50" stroke="#4C8CFF" stroke-width="10" stroke-linecap="round" opacity="0.22"/>
-        <line x1="32" y1="38" x2="32" y2="50" stroke="#4C8CFF" stroke-width="4" stroke-linecap="round"/>
-        <circle cx="32" cy="50" r="3" fill="#F2F6FF"/>
-      </svg>
-      LASER BEAM SCHOOL
-    </div>
+    <img class="brandlogo brandlogo-foot" src="images/logo.png" alt="Laser Beam School" width="720" height="262">
     <div>Laser Beam School SL</div>
     <div style="margin-top:8px;">WhatsApp: +34 633 56 56 38</div>
     <div style="margin-top:14px; display:flex; gap:18px;">
